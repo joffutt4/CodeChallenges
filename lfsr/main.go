@@ -20,12 +20,11 @@ func lfsr(taps []int, op, start string, iter int) {
 	var ins byte
 	fmt.Println(fmt.Sprintf("%d %s", 0, start))
 	for i := 1; i <= iter; i++ {
-		ins = 0
-		for j := 0; j < len(taps); j++ {
-			if op == "XOR" {
-				ins ^= bytes[taps[j]]
-			} else {
-				ins = ^(ins ^ bytes[taps[j]])
+		ins = bytes[taps[0]]
+		for j := 1; j < len(taps); j++ {
+			ins ^= bytes[taps[j]]
+			if op != "XOR" {
+				ins ^= 1
 			}
 		}
 		// After performing binary operations on the bytes, they will either be 0 or 1 so we will
