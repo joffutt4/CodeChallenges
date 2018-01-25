@@ -7,16 +7,19 @@ func main() {
 	input2 := []float64{2, 4, 15000000000}
 	input3 := []float64{2, 4, 184000000000000000000000000}
 
-	fmt.Println(rabbitSwarm(input1))
-	fmt.Println(rabbitSwarm(input2))
-	fmt.Println(rabbitSwarm(input3))
+	months, dead := rabbitSwarm(input1)
+	fmt.Printf("months: %d, dead: %d \n", months, dead)
+	months, dead = rabbitSwarm(input2)
+	fmt.Printf("months: %d, dead: %d \n", months, dead)
+	months, dead = rabbitSwarm(input3)
+	fmt.Printf("months: %d, dead: %d \n", months, dead)
 }
 
 type rabbit struct {
 	male, female, all float64
 }
 
-func rabbitSwarm(input []float64) (months, dead float64) {
+func rabbitSwarm(input []float64) (months, dead int) {
 	initialRabbit := rabbit{input[0], input[1], input[0] + input[1]}
 	var arrRabbits [96]rabbit
 	var allRabbits = arrRabbits[:]
@@ -33,7 +36,7 @@ func rabbitSwarm(input []float64) (months, dead float64) {
 		newRabbits.all += newRabbits.female + newRabbits.male
 		//Remove dead rabbits
 		total -= allRabbits[95].all
-		dead += allRabbits[95].all
+		dead += int(allRabbits[95].all)
 		//Add new rabbits
 		total += newRabbits.all
 		// Remove the last element from the array (Rabbits have died)
